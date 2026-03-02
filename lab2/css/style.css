@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "Golos Text";
+    src: url(css\fonts\GolosText-VariableFont_wght.ttf) format(tff);
+}
+
+h1{
+    font-family: 'Golos Text', sans-serif;
+    font-size: 140px;
+    font-weight: bold;
+    color: #222222;
+}
+.login-header {
+    margin-top: -609px;
+    margin-left: 170px;
+    font-weight: bold;
+    line-height: 180px;
+    letter-spacing: -1.5px;
+}
+.login-image {
+    margin-left: 269px;
+    margin-top: 289px;
+}
+h2 {
+    font-family: 'Golos Text', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    color: #222222;
+}
+h3 { 
+    font-family: 'Golos Text', sans-serif;
+    font-size: 16px;
+    font-weight: cursive;
+    color: #666666;
+}
+div {
+    width: 500;
+    height: 500;
+}
+form{
+    height: 50px;
+    width: 343px;
+    background-color: #b8b8b8;
+    
+}
