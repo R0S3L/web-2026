@@ -9,6 +9,9 @@ h1{
     font-weight: bold;
     color: #222222;
 }
+.login-media{
+    float: left;
+}
 .login-header {
     margin-top: -609px;
     margin-left: 170px;
@@ -19,6 +22,12 @@ h1{
 .login-image {
     margin-left: 269px;
     margin-top: 289px;
+}
+.login-form{
+    margin-top: 350px;
+    margin-left: 70px;
+    justify-content: center;
+    float: left;
 }
 h2 {
     font-family: 'Golos Text', sans-serif;
@@ -31,10 +40,6 @@ h3 {
     font-size: 16px;
     font-weight: cursive;
     color: #666666;
-}
-div {
-    width: 500;
-    height: 500;
 }
 form{
     height: 50px;
