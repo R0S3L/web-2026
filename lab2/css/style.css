@@ -34,7 +34,6 @@ body {
     display: block;
 }
 
-
 .login-header {
     position: absolute;
     top: 50%;
@@ -50,7 +49,6 @@ body {
     white-space: nowrap;
 }
 
-
 .login-form {
     display: inline-block;
     vertical-align: middle;
@@ -58,7 +56,6 @@ body {
     width: 343px;
 
 }
-
 
 h2 {
     font-size: 18px;
@@ -70,7 +67,6 @@ h2 {
 
 h3 {  
     font-size: 12px;
-    font-style: italic;
     color: #666666;
     margin-top: 0;
     margin-bottom: 20px;
@@ -79,7 +75,7 @@ h3 {
 input {
     height: 50px;
     width: 100%; 
-    background-color: #dad7d7;
+    background-color: #edf2f8;
     border-radius: 10px;
     border: none;
     padding-left: 15px;
@@ -107,7 +103,7 @@ input {
 .input-wrapper .show-password-button {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%); /* Центрируем по вертикали */
+    transform: translateY(-50%);
     right: 10px;
     background: none;
     border: none;
@@ -117,4 +113,27 @@ input {
 
 .input-wrapper .show-password-button .eye-icon {
     display: block;
+    filter: invert(100%);
+}
+
+/* Домашняя страница*/
+.side-panel {
+    position: absolute;
+    left: 0;
+    width: 72px;
+    height: 1080px;
+    border-right: #edf2f8 solid 1px;
+    
+    
+}
+.side-panel .side-panel-button{
+    margin-left: 25%;
+    background: transparent;
+    border: none;
+
+}
+.side-panel .side-panel-button .side-panel-icon {
+    display: block;
+    margin: 10px auto;
+    filter: invert(100%);
 }
