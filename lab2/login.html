@@ -6,19 +6,25 @@
         <title> Социальная сеть</title>
     </head>
     <body>
+    <div class="login-container">       
         <div class="login-media">
             <img class="login-image" src="images/login_image.png" alt="login" width="462px" height="501px">
             <h1 class="login-header">Войти</h1>
         </div>
         <div class="login-form">
-            <p>
-                <h2> Электропочта </h2>
-                <form action="/handler"></form>
-                <h3> Введите электронную почту в формате ******@***.**</h3>
-                <form action="/handler"></form>
-                <h2> Пароль </h2>
-                <button> Продолжить </button>
-            </p>
+            <h2> Электропочта </h2>
+            <input class="login-input" type="text" action="/handler">
+            <h3> Введите электронную почту в формате ******@***.**</h3>
+            <h2> Пароль </h2>
+            <div class="input-wrapper">
+                <input type="password" action="/handler">
+                <button class="show-password-button">
+                    <img class="eye-icon" src="images\icons\Eye_off_24.png" width="24px" height="24px">   
+                </button>
+            </div>           
+            <button class="login-button"> Продолжить </button>
         </div>
-    </body>
+
+    </div>
+</body>
 </html>

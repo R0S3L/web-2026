@@ -1,49 +1,120 @@
 @font-face {
     font-family: "Golos Text";
-    src: url(css\fonts\GolosText-VariableFont_wght.ttf) format(tff);
+    src: url(css\fonts\GolosText-VariableFont_wght.ttf) format(truetype); 
 }
 
-h1{
+* {
     font-family: 'Golos Text', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%; 
+    overflow: hidden; 
+}
+
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; 
+}
+
+.login-media {
+    display: inline-block;
+    vertical-align: middle; 
+    position: relative;
+    margin-right: 100px; 
+}
+
+.login-image {
+    display: block;
+}
+
+
+.login-header {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    margin-left: -130px;
+    margin-top: -265px; 
     font-size: 140px;
     font-weight: bold;
     color: #222222;
-}
-.login-media{
-    float: left;
-}
-.login-header {
-    margin-top: -609px;
-    margin-left: 170px;
-    font-weight: bold;
-    line-height: 180px;
+    line-height: 1;
     letter-spacing: -1.5px;
+    white-space: nowrap;
 }
-.login-image {
-    margin-left: 269px;
-    margin-top: 289px;
+
+
+.login-form {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    width: 343px;
+
 }
-.login-form{
-    margin-top: 350px;
-    margin-left: 70px;
-    justify-content: center;
-    float: left;
-}
+
+
 h2 {
-    font-family: 'Golos Text', sans-serif;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: normal;
     color: #222222;
+    margin-top: 30px;
+    margin-bottom: 5px;
 }
-h3 { 
-    font-family: 'Golos Text', sans-serif;
-    font-size: 16px;
-    font-weight: cursive;
+
+h3 {  
+    font-size: 12px;
+    font-style: italic;
     color: #666666;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
-form{
+
+input {
     height: 50px;
-    width: 343px;
-    background-color: #b8b8b8;
-    
+    width: 100%; 
+    background-color: #dad7d7;
+    border-radius: 10px;
+    border: none;
+    padding-left: 15px;
+    display: block; 
+    margin-bottom: 5px;
+}
+
+.login-button {
+    height: 50px;
+    width: 100%;
+    color: #fff;
+    background-color: #222222;
+    border-radius: 10px;
+    margin-top: 30px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper .show-password-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Центрируем по вертикали */
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.input-wrapper .show-password-button .eye-icon {
+    display: block;
 }
