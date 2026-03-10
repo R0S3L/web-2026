@@ -137,3 +137,12 @@ input {
     margin: 10px auto;
     filter: invert(100%);
 }
+
+.content-panel {
+    width: 474px;
+    height: 1338px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+}
