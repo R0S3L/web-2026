@@ -1,0 +1,180 @@
+// Visualization Script
+// Keep existing test
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+// ------------------------------
+// Visualizer: Yandex Geocoder
+// Handles both JSON and non-JSON responses.
+// If JSON: extracts coordinates and renders scatter chart + small table.
+// If not JSON: shows error + first 300 chars of body.
+// ------------------------------
+
+const template = `
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1f2937; }
+  .wrap { padding: 12px; }
+  .title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .muted { color: #6b7280; font-size: 12px; }
+  .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; align-items: start; }
+  .card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; background: #fff; }
+  .error { border: 1px solid #fecaca; background: #fff1f2; color: #991b1b; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  th, td { text-align: left; border-bottom: 1px solid #e5e7eb; padding: 6px 8px; font-size: 12px; }
+  th { background: #f9fafb; font-weight: 700; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; white-space: pre-wrap; word-break: break-word; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #eef2ff; color: #3730a3; font-size: 12px; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  canvas { max-width: 100%; }
+</style>
+
+<div class="wrap">
+  <div class="title">Yandex Geocode Visualizer</div>
+  <div class="row muted">
+    <span class="pill">{{mode}}</span>
+    <span>HTTP {{status}}</span>
+    {{#if query}}<span>Query: <b>{{query}}</b></span>{{/if}}
+  </div>
+
+  {{#if error}}
+    <div class="card error" style="margin-top:10px;">
+      <div style="font-weight:700; margin-bottom:6px;">Could not parse response as JSON</div>
+      <div class="muted" style="margin-bottom:6px;">{{error}}</div>
+      <div class="mono">{{bodyPreview}}</div>
+    </div>
+  {{/if}}
+
+  {{#unless error}}
+    <div class="grid" style="margin-top:10px;">
+      <div class="card">
+        <div style="font-weight:700; margin-bottom:6px;">Coordinates (scatter)</div>
+        <div class="muted">X = Longitude, Y = Latitude</div>
+        <canvas id="geoChart" height="220"></canvas>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700;">Extracted points</div>
+        <div class="muted">Top results from response</div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Lat</th>
+              <th>Lon</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each points}}
+              <tr>
+                <td>{{idx}}</td>
+                <td>{{name}}</td>
+                <td>{{lat}}</td>
+                <td>{{lon}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script>
+      pm.getData(function (err, data) {
+        var pts = (data && data.points) ? data.points : [];
+        var ctx = document.getElementById('geoChart');
+
+        var dataset = pts
+          .filter(function(p){ return typeof p.lon === 'number' && typeof p.lat === 'number'; })
+          .map(function(p){ return { x: p.lon, y: p.lat, label: p.name }; });
+
+        new Chart(ctx, {
+          type: 'scatter',
+          data: {
+            datasets: [{
+              label: 'Geocoded points',
+              data: dataset,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              backgroundColor: 'rgba(59, 130, 246, 0.65)',
+              borderColor: 'rgba(37, 99, 235, 1)'
+            }]
+          },
+          options: {
+            legend: { display: true },
+            tooltips: {
+              callbacks: {
+                label: function(tooltipItem, chartData) {
+                  var p = chartData.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                  var name = (p && p.label) ? p.label : 'point';
+                  return name + ': (' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+                }
+              }
+            },
+            scales: {
+              xAxes: [{ scaleLabel: { display: true, labelString: 'Longitude' } }],
+              yAxes: [{ scaleLabel: { display: true, labelString: 'Latitude' } }]
+            }
+          }
+        });
+      });
+    </script>
+  {{/unless}}
+</div>
+`;
+
+function createPayload() {
+    const status = pm.response.code;
+    const bodyText = pm.response.text();
+
+    const payload = {
+        mode: 'unknown',
+        status,
+        query: pm.request.url && pm.request.url.query ? (pm.request.url.query.find(q => q.key === 'geocode') || {}).value : undefined,
+        error: null,
+        bodyPreview: null,
+        points: []
+    };
+
+    // Try parse JSON
+    try {
+        const json = pm.response.json();
+        payload.mode = 'json';
+
+        // Yandex geocode: response.GeoObjectCollection.featureMember[].GeoObject
+        const members = json && json.response && json.response.GeoObjectCollection && json.response.GeoObjectCollection.featureMember
+            ? json.response.GeoObjectCollection.featureMember
+            : [];
+
+        payload.points = members.slice(0, 10).map((m, i) => {
+            const obj = m && m.GeoObject ? m.GeoObject : {};
+            const name = (obj && obj.name) ? obj.name : ((obj && obj.description) ? obj.description : ('Result ' + (i + 1)));
+            const pos = obj && obj.Point && typeof obj.Point.pos === 'string' ? obj.Point.pos : '';
+            // pos format: "lon lat"
+            const parts = pos.split(' ').map(p => p.trim()).filter(Boolean);
+            const lon = parts.length > 0 ? Number(parts[0]) : null;
+            const lat = parts.length > 1 ? Number(parts[1]) : null;
+
+            return {
+                idx: i + 1,
+                name,
+                lat: (typeof lat === 'number' && isFinite(lat)) ? lat : null,
+                lon: (typeof lon === 'number' && isFinite(lon)) ? lon : null
+            };
+        }).filter(p => p.lat !== null && p.lon !== null);
+
+        if (!payload.points.length) {
+            payload.mode = 'json (no points found)';
+        }
+
+        return payload;
+    } catch (e) {
+        payload.mode = 'non-json';
+        payload.error = String(e && e.message ? e.message : e);
+        payload.bodyPreview = (bodyText || '').slice(0, 300);
+        return payload;
+    }
+}
+
+pm.visualizer.set(template, createPayload());
