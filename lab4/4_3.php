@@ -7,7 +7,7 @@
 </head>
 <body>
     <form method="post">
-    <input type="text" name="date" placeholder="ДД.ММ.ГГГГ">
+    <input type="text" name="date" placeholder="День и Месяц">
     <button type="submit">Определить</button>
 </form>
 
