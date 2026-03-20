@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Польска</title>
 </head>
 <body>
     <form method="post">
@@ -14,24 +14,24 @@
     <?php
     if (isset($_POST['expr'])) {
         $input = $_POST['expr'];
-        $tokens = explode(" ", $input);
+        $sign = explode(" ", $input);
 
-        $stack = [];
+        $numbers = [];
 
-        foreach ($tokens as $t) {
-            if ($t == "+" || $t == "-" || $t == "*") {
-                $b = array_pop($stack);
-                $a = array_pop($stack);
+        foreach ($sign as $s) {
+            if ($s == "+" || $s == "-" || $s == "*") {
+                $b = array_pop($numbers);
+                $a = array_pop($numbers);
 
-                if ($t == "+") $stack[] = $a + $b;
-                if ($t == "-") $stack[] = $a - $b;
-                if ($t == "*") $stack[] = $a * $b;
+                if ($t == "+") $numbers[] = $a + $b;
+                if ($t == "-") $numbers[] = $a - $b;
+                if ($t == "*") $numbers[] = $a * $b;
             } else {
-                $stack[] = (int)$t;
+                $numbers[] = (int)$t;
             }
         }   
 
-        echo $stack[0];
+        echo $numbers[0];
     }
     ?>
 </body>
