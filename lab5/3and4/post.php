@@ -1,0 +1,89 @@
+<?php
+declare(strict_types=1);
+
+// Получаем и валидируем postId из GET-параметра
+$postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+if ($postId === false || $postId === null) {
+    http_response_code(400);
+    echo 'Invalid post ID';
+    exit;
+}
+
+// Mock-данные (в будущем — запрос к БД)
+$postsDatabase = [
+    1 => [
+        'id' => 1,
+        'title' => 'The Road Ahead',
+        'subtitle' => 'Thoughts on tomorrow',
+        'content' => '<p>Full content of the post...</p>',
+        'author' => 'John Doe',
+        'published_at' => 	1356116400,
+        'image' => '/static/post1.jpg',
+        'tags' => ['future', 'tech'],
+    ],
+    2 => [
+        'id' => 2,
+        'title' => 'Minimalist Living',
+        'subtitle' => 'Less is more',
+        'content' => '<p>Full content of the second post...</p>',
+        'author' => 'John Pork',
+        'published_at' => 	1320995471,
+        'image' => '/static/post2.jpg',
+        'tags' => ['lifestyle', 'minimalism'],
+    ],
+];
+
+// Проверяем существование поста
+if (!isset($postsDatabase[$postId])) {
+    http_response_code(404);
+    echo 'Post not found';
+    exit;
+}
+
+$post = $postsDatabase[$postId];
+?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title><?= htmlspecialchars($post['title']) ?></title>
+</head>
+<body>
+    <article class="post">
+        <header>
+            <h1><?= htmlspecialchars($post['title']) ?></h1>
+            <?php if (!empty($post['subtitle'])): ?>
+                <h2><?= htmlspecialchars($post['subtitle']) ?></h2>
+            <?php endif; ?>
+            
+            <div class="post-meta">
+                <span class="author"><?= htmlspecialchars($post['author']) ?></span>
+                <time datetime="<?= date('c', $post['published_at']) ?>">
+                    Опубликовано: <?= date('d.m.Y H:i', $post['published_at']) ?>
+                </time>
+            </div>
+            
+            <?php if (!empty($post['image'])): ?>
+                <img src="<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?>">
+            <?php endif; ?>
+        </header>
+        
+        <div class="post-content">
+            <?= $post['content'] ?>
+        </div>
+        
+        <?php if (!empty($post['tags'])): ?>
+            <footer class="post-tags">
+                <?php foreach ($post['tags'] as $tag): ?>
+                    <a href="/tag?name=<?= urlencode($tag) ?>">#<?= htmlspecialchars($tag) ?></a>
+                <?php endforeach; ?>
+            </footer>
+        <?php endif; ?>
+    </article>
+    
+    <nav>
+        <a href="/home">← Назад к списку постов</a>
+    </nav>
+</body>
+</html>

@@ -30,10 +30,13 @@ $posts = [
     <title>Document</title>
 </head>
 <body>
-    <section class="posts">
-    <?php foreach ($posts as $post): ?>
-        <?php include __DIR__ . '/post_preview.php'; ?>
-    <?php endforeach; ?>
+    <blockquote class="posts">
+        <?php 
+        foreach ($posts as $post) {
+        include 'post_preview.php';
+        }
+        ?>
+    </blockquote>
 </section>
 </body>
-</html
+</html>
