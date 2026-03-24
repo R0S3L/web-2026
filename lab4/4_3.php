@@ -8,7 +8,7 @@
 <body>
     <form method="post">
     <input type="text" name="date" placeholder="День и Месяц">
-    <button type="submit">Определить</button>
+    <button type="submit">Определить знак зодиака</button>
 </form>
 
 <?php

@@ -10,7 +10,6 @@ if ($postId === false || $postId === null) {
     exit;
 }
 
-// Mock-данные (в будущем — запрос к БД)
 $postsDatabase = [
     1 => [
         'id' => 1,
@@ -19,8 +18,7 @@ $postsDatabase = [
         'content' => '<p>Full content of the post...</p>',
         'author' => 'John Doe',
         'published_at' => 	1356116400,
-        'image' => '/static/post1.jpg',
-        'tags' => ['future', 'tech'],
+        'image' => '/lab5/static/images/post1.png',
     ],
     2 => [
         'id' => 2,
@@ -29,8 +27,7 @@ $postsDatabase = [
         'content' => '<p>Full content of the second post...</p>',
         'author' => 'John Pork',
         'published_at' => 	1320995471,
-        'image' => '/static/post2.jpg',
-        'tags' => ['lifestyle', 'minimalism'],
+        'image' => '/lab5/static/images/post2.png',
     ],
 ];
 
@@ -73,17 +70,10 @@ $post = $postsDatabase[$postId];
             <?= $post['content'] ?>
         </div>
         
-        <?php if (!empty($post['tags'])): ?>
-            <footer class="post-tags">
-                <?php foreach ($post['tags'] as $tag): ?>
-                    <a href="/tag?name=<?= urlencode($tag) ?>">#<?= htmlspecialchars($tag) ?></a>
-                <?php endforeach; ?>
-            </footer>
-        <?php endif; ?>
     </article>
     
     <nav>
-        <a href="/home">← Назад к списку постов</a>
+        <a href="/lab5/home.php">← Назад к списку постов</a>
     </nav>
 </body>
 </html>
