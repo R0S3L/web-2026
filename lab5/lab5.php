@@ -1,3 +1,27 @@
+<?php
+declare(strict_types=1);
+
+$posts = [
+    [
+        'id' => 1,
+        'title' => 'The Road Ahead',
+        'subtitle' => 'Thoughts on tomorrow',
+        'author' => 'John Doe',
+        'published_at' => 	1356116400, // 	Fri Dec 21 2012 19:00:00 GMT+0000
+    ],
+    [
+        'id' => 2,
+        'title' => 'Minimalist Living',
+        'subtitle' => 'Less is more',
+        'author' => 'Jane Smith',
+        'img_modifier' => 'large',
+        'published_at' => 	1320995471, // 	Fri Nov 11 2011 07:11:11 GMT+0000
+        'image' => '/static/post2.jpg',
+    ],
+];
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,23 +30,10 @@
     <title>Document</title>
 </head>
 <body>
-    <?php
-    $posts = [
-    [
-        'id' => 1,
-        'title' => 'The Road Ahead',
-        'subtitle' => 'subtitle',
-        'author' => 'Me',	
-    ],
-    [
-        'id' => 2,
-        'title' => 'The Road Ahead',
-        'subtitle' => 'subtitle',
-        'author' => 'Me',+
-    ]
-    ];
-?>
-
-
+    <section class="posts">
+    <?php foreach ($posts as $post): ?>
+        <?php include __DIR__ . '/post_preview.php'; ?>
+    <?php endforeach; ?>
+</section>
 </body>
 </html

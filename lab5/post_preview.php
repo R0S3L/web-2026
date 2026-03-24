@@ -5,4 +5,5 @@
   <a title='<?= $post['title'] ?>' href='/post?id=<?= $post['id'] ?>'>
     <?= $post['subtitle'] ?>
   </a>
+  <p><?= $post['published_at'] ?></p>
 </div>
