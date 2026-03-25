@@ -22,10 +22,10 @@ $postsDatabase = [
     ],
     2 => [
         'id' => 2,
-        'title' => 'Minimalist Living',
-        'subtitle' => 'Less is more',
+        'title' => 'Future Past',
+        'subtitle' => 'Less I know the better',
         'content' => '<p>Full content of the second post...</p>',
-        'author' => 'John Pork',
+        'author' => 'Tame Impala',
         'published_at' => 	1320995471,
         'image' => '/lab5/static/images/post2.png',
     ],
@@ -52,26 +52,21 @@ $post = $postsDatabase[$postId];
             <h1><?= htmlspecialchars($post['title']) ?></h1>
             <?php if (!empty($post['subtitle'])): ?>
                 <h2><?= htmlspecialchars($post['subtitle']) ?></h2>
-            <?php endif; ?>
-            
+            <?php endif; ?>           
+            <?php if (!empty($post['image'])): ?>
+                <img src="<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?>">
+            <?php endif; ?>           
             <div class="post-meta">
                 <span class="author"><?= htmlspecialchars($post['author']) ?></span>
                 <time datetime="<?= date('c', $post['published_at']) ?>">
                     Опубликовано: <?= date('d.m.Y H:i', $post['published_at']) ?>
                 </time>
-            </div>
-            
-            <?php if (!empty($post['image'])): ?>
-                <img src="<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?>">
-            <?php endif; ?>
-        </header>
-        
+            </div>          
+        </header>        
         <div class="post-content">
             <?= $post['content'] ?>
-        </div>
-        
-    </article>
-    
+        </div>        
+    </article>    
     <nav>
         <a href="/lab5/home.php">← Назад к списку постов</a>
     </nav>

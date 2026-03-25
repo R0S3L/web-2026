@@ -69,3 +69,4 @@ try {
         'timestamp' => time(),
     ], JSON_THROW_ON_ERROR);
 }
+
