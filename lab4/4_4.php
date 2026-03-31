@@ -13,22 +13,30 @@
     </form>
 
     <?php
+    function IsTicketLucky($num){
+        $num = str_pad($num, 6, "0", STR_PAD_LEFT);
+
+        $sum1 = $num[0] + $num[1] + $num[2];
+        $sum2 = $num[3] + $num[4] + $num[5];
+
+        if ($sum1 == $sum2) {
+            return $num;
+        }
+        return false;
+    }
+
     if (isset($_POST['start']) && isset($_POST['end'])) {
         $start = (int)$_POST['start'];
         $end = (int)$_POST['end'];
 
         for ($i = $start; $i <= $end; $i++) {
-            $num = str_pad($i, 6, "0", STR_PAD_LEFT);
-
-            $sum1 = $num[0] + $num[1] + $num[2];
-            $sum2 = $num[3] + $num[4] + $num[5];
-
-            if ($sum1 == $sum2) {
-                echo $num . "<br>";
+            $result = IsTicketLucky($i);
+            
+            if ($result) {
+                echo $result . "<br>";
             }
-        
         }
     }
-    ?>    
+    ?>      
 </body>
 </html>

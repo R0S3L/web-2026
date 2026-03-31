@@ -7,31 +7,40 @@
 </head>
 <body>
     <form method="post">
-    <input type="text" name="date" placeholder="День и Месяц">
-    <button type="submit">Определить знак зодиака</button>
-</form>
+        <input type="text" name="date" placeholder="День и Месяц">
+        <button type="submit">Определить знак зодиака</button>
+    </form>
 
-<?php
-if (isset($_POST['date'])) {
-    $date = $_POST['date'];
+    <?php
+    // Выносим логику определения знака в функцию
+    function getZodiacSign($day, $month) {
+        if (($month == 1 && $day >= 20) || ($month == 2 && $day <= 18)) return "Водолей";
+        else if (($month == 2 && $day >= 19) || ($month == 3 && $day <= 20)) return "Рыбы";
+        else if (($month == 3 && $day >= 21) || ($month == 4 && $day <= 19)) return "Овен";
+        else if (($month == 4 && $day >= 20) || ($month == 5 && $day <= 20)) return "Телец";
+        else if (($month == 5 && $day >= 21) || ($month == 6 && $day <= 20)) return "Близнецы";
+        else if (($month == 6 && $day >= 21) || ($month == 7 && $day <= 22)) return "Рак";
+        else if (($month == 7 && $day >= 23) || ($month == 8 && $day <= 22)) return "Лев";
+        else if (($month == 8 && $day >= 23) || ($month == 9 && $day <= 22)) return "Дева";
+        else if (($month == 9 && $day >= 23) || ($month == 10 && $day <= 22)) return "Весы";
+        else if (($month == 10 && $day >= 23) || ($month == 11 && $day <= 21)) return "Скорпион";
+        else if (($month == 11 && $day >= 22) || ($month == 12 && $day <= 21)) return "Стрелец";
+        else return "Козерог";
+    }
 
-    $parts = explode('.', $date);
-    $day = (int)$parts[0];
-    $month = (int)$parts[1];
+    if (isset($_POST['date'])) {
+        $date = $_POST['date'];
+        $parts = explode('.', $date);
 
-    if (($month == 1 && $day >= 20) || ($month == 2 && $day <= 18)) echo "Водолей";
-    else if (($month == 2 && $day >= 19) || ($month == 3 && $day <= 20)) echo "Рыбы";
-    else if (($month == 3 && $day >= 21) || ($month == 4 && $day <= 19)) echo "Овен";
-    else if (($month == 4 && $day >= 20) || ($month == 5 && $day <= 20)) echo "Телец";
-    else if (($month == 5 && $day >= 21) || ($month == 6 && $day <= 20)) echo "Близнецы";
-    else if (($month == 6 && $day >= 21) || ($month == 7 && $day <= 22)) echo "Рак";
-    else if (($month == 7 && $day >= 23) || ($month == 8 && $day <= 22)) echo "Лев";
-    else if (($month == 8 && $day >= 23) || ($month == 9 && $day <= 22)) echo "Дева";
-    else if (($month == 9 && $day >= 23) || ($month == 10 && $day <= 22)) echo "Весы";
-    else if (($month == 10 && $day >= 23) || ($month == 11 && $day <= 21)) echo "Скорпион";
-    else if (($month == 11 && $day >= 22) || ($month == 12 && $day <= 21)) echo "Стрелец";
-    else echo "Козерог";
-}
-?>
+        // Проверка, чтобы избежать ошибок, если точка не введена
+        if (count($parts) >= 2) {
+            $day = (int)$parts[0];
+            $month = (int)$parts[1];
+            
+            // Вызываем функцию и выводим результат
+            echo getZodiacSign($day, $month);
+        }
+    }
+    ?>
 </body>
 </html>
