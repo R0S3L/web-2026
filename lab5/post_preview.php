@@ -1,5 +1,5 @@
 <div>
-  <h3><?= $post['title'] ?></h3>
+  <h3><?= $post['title'] ?? null ?></h3>
   <h4><?= $post['subtitle'] ?></h4>
   <span><?= $post['author'] ?></span>
   <img src="<?= htmlspecialchars($post['image']) ?>"/>

@@ -18,16 +18,16 @@ $postsDatabase = [
         'content' => '<p>Full content of the post...</p>',
         'author' => 'John Doe',
         'published_at' => 	1356116400,
-        'image' => '/lab5/static/images/post1.png',
+        'image' => '/lab5/images/content_image_1.png',
     ],
     2 => [
         'id' => 2,
         'title' => 'Future Past',
         'subtitle' => 'Less I know the better',
         'content' => '<p>Full content of the second post...</p>',
-        'author' => 'Tame Impala',
+        'author' => 'Лиза Демина',
         'published_at' => 	1320995471,
-        'image' => '/lab5/static/images/post2.png',
+        'image' => '/lab5/images/content_image_2.png',
     ],
 ];
 
@@ -68,7 +68,7 @@ $post = $postsDatabase[$postId];
         </div>        
     </article>    
     <nav>
-        <a href="/lab5/home.php">← Назад к списку постов</a>
+        <a href="/lab5/home/index.php">← Назад к списку постов</a>
     </nav>
 </body>
 </html>

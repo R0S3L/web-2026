@@ -52,8 +52,9 @@ $posts = [
                 <img class="icons pen" src="../images/icons/pen.svg" alt="Edit">
             </div>
             <div>
-                <img class="photo_post" src="../images/content_image_1.png" alt="Content 1" href='/lab5/post.php?id=<?= $post['id'] ?>'/>
-
+                <a href='/lab5/post.php?id=1'>
+                    <img class="photo_post" src="../images/content_image_1.png" alt="Content 1"/>
+                </a>
             </div> 
             <div class="react_border">
                 <img class="react_border likes" src="../images/icons/like.png" alt="Likes">
@@ -73,7 +74,9 @@ $posts = [
                 <img class="icons pen" src="../images/icons/pen.svg" alt="Edit">
             </div>
             <div>
-                <img class="photo_post" src="../images/content_image_2.png" alt="Content 2" href='/lab5/post.php?id=<?= $post['id'] ?>'>
+                <a  href='/lab5/post.php?id=2'>
+                    <img class="photo_post" src="../images/content_image_2.png" alt="Content 2">
+                </a>
             </div> 
             <div class="react_border">
                 <img class="react_border likes" src="../images/icons/like.png" alt="Likes">
