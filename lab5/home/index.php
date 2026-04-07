@@ -74,7 +74,11 @@ $posts = [
                 <img class="icons pen" src="../images/icons/pen.svg" alt="Edit">
             </div>
             <div>
+<<<<<<< HEAD
                 <a  href='/lab5/post.php?id=2'>
+=======
+                <a href='/lab5/post.php?id=2'>
+>>>>>>> a3917d706710d29ba17101c5ebb4dbcad1df254e
                     <img class="photo_post" src="../images/content_image_2.png" alt="Content 2">
                 </a>
             </div> 
