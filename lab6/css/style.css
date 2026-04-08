@@ -101,11 +101,11 @@ input {
     width: 100%;
 }
 
-.input-wrapper input {
+.input {
     padding-right: 45px;
 }
 
-.input-wrapper .show-password-button {
+.show-password-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
