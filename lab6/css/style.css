@@ -212,7 +212,7 @@ input {
 }
 
 .react_border {
-    margin-top: 16px;
+    margin-top: 10px;
     background-color: #edf2f8;
     border: none;
     border-radius: 5px;
@@ -227,6 +227,7 @@ input {
 }
 
 .react_border.likes {
+    margin-left: 5px;
     width: 16px;
     height: 16px;
 }
@@ -306,21 +307,21 @@ input {
     background-color: #edf2f8;
     border: none;
     border-radius: 6px;
-    padding: 7px 9px;
-    gap: 4px;
+    gap: 10px;
     margin-top: 12px;
 }
 
 .profile.pic_counter.icon {
     width: 16px;
     height: 16px;
-    flex-shrink: 0;
+    margin-left: 5px;
+    margin-top: -1px;
 }
 
 .profile.pic_counter.text {
     font-size: 14px;
     line-height: 18px;
-    letter-spacing: -0.15px;
+    margin-top: -0.5px;
     font-weight: 400;
     color: #222222;
     white-space: nowrap;
