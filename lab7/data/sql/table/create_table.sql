@@ -5,7 +5,7 @@ CREATE TABLE `blog`.`user` (
   `user_description` varchar(90) DEFAULT NULL,
   `user_image` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
 
 
 CREATE TABLE `blog`.`post` (
@@ -18,5 +18,4 @@ CREATE TABLE `blog`.`post` (
   PRIMARY KEY (`id_post`),
   KEY `user_post_idx` (`id_user`),
   CONSTRAINT `post_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+)

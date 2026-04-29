@@ -28,8 +28,8 @@ $posts = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <? php include 'home/index.php'>
     <title>Lab5</title>
-    <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
     <div class="posts" >

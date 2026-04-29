@@ -12,6 +12,7 @@ function connectDB(): PDO
     ]);
 }
 
+
 function findPostInDB(PDO $connection, int $id): ?array
 {
     $stmt = $connection->prepare("
@@ -28,7 +29,6 @@ function findPostInDB(PDO $connection, int $id): ?array
         FROM post AS p
         INNER JOIN user AS u ON p.id_user = u.id_user
         WHERE p.id_post = :id
-        LIMIT 1
     ");
 
     $stmt->execute([':id' => $id]);
