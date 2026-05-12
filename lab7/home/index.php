@@ -34,8 +34,6 @@ $ids = $pdo->query("SELECT id_post FROM post ORDER BY post_date DESC")->fetchAll
             ?>
             <?php include 'post.php'; ?>
         <?php endforeach; ?>
-
     </div>
-
 </body>
 </html>

@@ -45,6 +45,7 @@ $post = $postsDatabase[$postId];
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($post['title']) ?></title>
+    <link href="lab5/css/style.css" rel="stylesheet">
 </head>
 <body>
     <article class="post">
