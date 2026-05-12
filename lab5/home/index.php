@@ -36,9 +36,11 @@ $posts = [
 <body class="block">
     <?php include 'sidebar.php'; ?>
     <div class="scroll_bar">
-        <?php foreach ($posts as $post) { 
-            include 'post_preview.php'; 
-            } ?>
+        <div>
+            <?php foreach ($posts as $post) { 
+                include 'post_preview.php'; 
+                } ?>
+        </div>
     </div>
 </body>
 </html>
