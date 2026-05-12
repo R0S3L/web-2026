@@ -1,7 +1,5 @@
 <?php
 declare(strict_types=1);
-
-// Получаем и валидируем postId из GET-параметра
 $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if ($postId === false || $postId === null) {
@@ -45,7 +43,7 @@ $post = $postsDatabase[$postId];
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($post['title']) ?></title>
-    <link href="lab5/css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 <body>
     <article class="post">
