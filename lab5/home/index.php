@@ -8,10 +8,10 @@ $posts = [
         'subtitle'     => 'Thoughts on tomorrow',
         'content'      => 'Так красиво сегодня на улице! Настоящая зима)) Вспоминается Бродский: «Поздно ночью, в уснувшей долине, на самом дне...',
         'author'       => 'Ваня Денисов',
-        'author_photo' => '../images/user_first.png', // Добавлено для шаблона
-        'published_at' => time() - 7200,              // ~2 часа назад
+        'author_photo' => '../images/user_first.png', 
+        'published_at' => date('Y-m-d H:i:s',  time() - 7200),              
         'image'        => '../images/content_image_1.png',
-        'likes'        => 203,                        // Добавлено для шаблона
+        'likes'        => 203,                        
     ],
     2 => [
         'id'           => 2,
@@ -20,7 +20,7 @@ $posts = [
         'content'      => 'Ещё один прекрасный зимний день. Снег хрустит под ногами, а воздух морозный и свежий.',
         'author'       => 'Лиза Демина',
         'author_photo' => '../images/user_second.png',
-        'published_at' => time() - 172800,            // ~2 дня назад
+        'published_at' => date('Y-m-d H:i:s',  time() - 172800),           
         'image'        => '../images/content_image_2.png',
         'likes'        => 204,
     ],

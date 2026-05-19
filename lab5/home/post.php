@@ -9,23 +9,27 @@ if ($postId === false || $postId === null) {
 }
 
 $postsDatabase = [
-    1 => [
-        'id' => 1,
-        'title' => 'The Road Ahead',
-        'subtitle' => 'Thoughts on tomorrow',
-        'content' => '<p>Full content of the post...</p>',
-        'author' => 'John Doe',
-        'published_at' => 	1356116400,
-        'image' => '../images/content_image_1.png',
+     1 => [
+        'id'           => 1,
+        'title'        => 'The Road Ahead',
+        'subtitle'     => 'Thoughts on tomorrow',
+        'content'      => 'Так красиво сегодня на улице! Настоящая зима)) Вспоминается Бродский: «Поздно ночью, в уснувшей долине, на самом дне...',
+        'author'       => 'Ваня Денисов',
+        'author_photo' => '../images/user_first.png',
+        'published_at' => time() - 7200,              
+        'image'        => '../images/content_image_1.png',
+        'likes'        => 203,                     
     ],
     2 => [
-        'id' => 2,
-        'title' => 'Future Past',
-        'subtitle' => 'Less I know the better',
-        'content' => '<p>Full content of the second post...</p>',
-        'author' => 'Лиза Демина',
-        'published_at' => 	1320995471,
-        'image' => '../images/content_image_2.png',
+        'id'           => 2,
+        'title'        => 'Future Past',
+        'subtitle'     => 'Less I know the better',
+        'content'      => 'Ещё один прекрасный зимний день. Снег хрустит под ногами, а воздух морозный и свежий.',
+        'author'       => 'Лиза Демина',
+        'author_photo' => '../images/user_second.png',
+        'published_at' => time() - 172800,            
+        'image'        => '../images/content_image_2.png',
+        'likes'        => 204,
     ],
 ];
 
@@ -42,7 +46,7 @@ $post = $postsDatabase[$postId];
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($post['title']) ?></title>
+    <title><?= $post['title'] ?></title>
     <link href="../css/style.css" rel="stylesheet">
 </head>
 <body class="block">
@@ -54,15 +58,15 @@ $post = $postsDatabase[$postId];
                 alt="Пользователь"
             >
             <h2 class="nickname">
-                <?= htmlspecialchars($post['author']) ?>
+                <?= $post['author'] ?>
             </h2>
         </div>
         <div>
             <?php if (!empty($post['image'])): ?>
                 <img
                     class="photo_post"
-                    src="<?= htmlspecialchars($post['image']) ?>"
-                    alt="<?= htmlspecialchars($post['title']) ?>"
+                    src="<?= $post['image'] ?>"
+                    alt="<?= $post['title'] ?>"
                 >
             <?php endif; ?>
         </div>
@@ -78,11 +82,11 @@ $post = $postsDatabase[$postId];
         </div>
         <div class="comments">
             <h1 class="nickname">
-                <?= htmlspecialchars($post['title']) ?>
+                <?= $post['title'] ?>
             </h1>
             <?php if (!empty($post['subtitle'])): ?>
                 <h3 class="comments description">
-                    <?= htmlspecialchars($post['subtitle']) ?>
+                    <?= $post['subtitle'] ?>
                 </h3>
             <?php endif; ?>
             <div class="comments">
