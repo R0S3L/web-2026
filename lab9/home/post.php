@@ -48,9 +48,11 @@ $sliderId = 'slider_' . $post['id_post'];
         <h2 class="react_border counter"><?= $likes ?></h2>
     </div>
 
-    <div>
-        <h3 class="comments"><?= $description ?></h3>
-        <h3 class="comments description">ещё</h3>
-        <h3 class="comments description"><?= $dateLabel ?></h3>
-    </div>
+    <div class="post-description-block">
+        <div class="post-text-container is-clamped">
+            <span class="post-text"><?= $description ?></span>
+            <button class="read-more-btn" style="display: none;">ещё</button>
+        </div>
+    <h3 class="comments description"><?= $dateLabel ?></h3>
+</div>
 </div>

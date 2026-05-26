@@ -124,3 +124,38 @@ document.querySelectorAll('.slider:not(#modalSlider)').forEach(slider => {
 });
 
 modalCloseBtn.addEventListener('click', closeModal);
+
+function initReadMore() {
+    const containers = document.querySelectorAll('.post-text-container');
+    
+    containers.forEach(container => {
+        const textEl = container.querySelector('.post-text');
+        const btn = container.querySelector('.read-more-btn');
+        
+        if (!textEl || !btn) return;
+        
+        const isOverflowing = textEl.scrollHeight > 36; 
+        
+        if (isOverflowing) {
+            btn.style.display = 'inline-block';
+            
+            btn.addEventListener('click', () => {
+                const isClamped = container.classList.contains('is-clamped');
+                
+                if (isClamped) {
+                    container.classList.remove('is-clamped');
+                    btn.textContent = 'Свернуть';
+                } else {
+                    container.classList.add('is-clamped');
+                    btn.textContent = 'ещё';
+                }
+            });
+        } else {
+            btn.style.display = 'none';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initReadMore);
+
+initReadMore();
