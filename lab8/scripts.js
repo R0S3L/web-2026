@@ -1,7 +1,4 @@
-// ============================================================
 // 8_1.js — isPrimeNumber
-// ============================================================
-
 function isPrimeNumber(input) {
     if (typeof input === 'number') {
         if (!Number.isInteger(input)) {
@@ -43,13 +40,10 @@ function isPrimeNumber(input) {
     }
 }
 
-// Вспомогательная функция для проверки, является ли число простым
 function isPrime(num) {
-    // Числа меньше 2 не являются простыми
     if (num < 2) {
         return false;
     }
-    // Проверка делителей от 2 до num-1
     for (let i = 2; i < num; i++) {
         if (num % i === 0) {
             return false;
@@ -58,11 +52,7 @@ function isPrime(num) {
     return true;
 }
 
-
-// ============================================================
 // 8_2.js — countVowels
-// ============================================================
-
 function countVowels(str) {
     if (typeof str !== 'string') {
         console.log("Ошибка: параметр должен быть строкой");
@@ -91,11 +81,7 @@ function countVowels(str) {
     return count;
 }
 
-
-// ============================================================
 // 8_3.js — uniqueElements
-// ============================================================
-
 function uniqueElements(arr) {
     if (!Array.isArray(arr)) {
         console.log("Ошибка: параметр должен быть массивом");
@@ -116,11 +102,7 @@ function uniqueElements(arr) {
     return result;
 }
 
-
-// ============================================================
 // 8_4.js — mergeObjects
-// ============================================================
-
 function mergeObjects(obj1, obj2) {
     if (typeof obj1 !== 'object' || obj1 === null || Array.isArray(obj1)) {
         console.log("Ошибка: первый параметр должен быть объектом");
@@ -143,11 +125,7 @@ function mergeObjects(obj1, obj2) {
     return result;
 }
 
-
-// ============================================================
 // 8_5.js — selectNames
-// ============================================================
-
 function selectNames(users) {
     if (!Array.isArray(users)) {
         console.log("Ошибка: параметр должен быть массивом");
@@ -159,11 +137,7 @@ function selectNames(users) {
     return names;
 }
 
-
-// ============================================================
 // 8_6.js — mapObject
-// ============================================================
-
 function mapObject(obj, callback) {
     if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
         console.log("Ошибка: первый параметр должен быть объектом");
@@ -186,11 +160,7 @@ function mapObject(obj, callback) {
     return result;
 }
 
-
-// ============================================================
 // 8_7.js — passwordGen
-// ============================================================
-
 function passwordGen(len) {
     const upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const lowerChars = 'abcdefghijklmnopqrstuvwxyz';
