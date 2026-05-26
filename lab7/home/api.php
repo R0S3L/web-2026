@@ -1,21 +1,6 @@
 <?php
+require_once __DIR__. '\database.php';
 
-function connectDatabase(): PDO {
-    try {
-        $pdo = new PDO(
-            'mysql:host=localhost;dbname=blog;charset=utf8mb4',
-            'root',
-            ''
-        );
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        return $pdo;
-    } catch (PDOException $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Database connection failed']);
-        exit;
-    }
-}
 
 $method = $_SERVER['REQUEST_METHOD'];
 $errorCheck = FALSE;
@@ -85,33 +70,14 @@ if (!$errorCheck) {
 }
 
 if (!$errorCheck) {
-    $maxSize = 5 * 1024 * 1024;
-    if ($image['size'] > $maxSize) {
-        http_response_code(400);
-        $response = ['error' => 'File too large. Max size: 5MB'];
-        $errorCheck = TRUE;
-    }
-}
-
-if (!$errorCheck) {
-    // Получаем расширение файла
     $extension = pathinfo($image['name'], PATHINFO_EXTENSION);
-    // Генерируем уникальное имя файла
     $imageName = uniqid('img_') . '_' . time() . '.' . $extension;
     
-    // Путь для сохранения файла на сервере
     $uploadDir = '../images/';
     $imagePath = $uploadDir . $imageName;
     
-    // В БД сохраняем ТОЛЬКО имя файла (не полный путь)
-    $dbImagePath = $imageName; // Просто имя файла
+    $dbImagePath = $imageName; 
     
-    // Создаем директорию если не существует
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
-    
-    // Перемещаем загруженный файл
     if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
         http_response_code(500);
         $response = ['error' => 'Failed to save uploaded file'];
@@ -121,7 +87,7 @@ if (!$errorCheck) {
 
 if (!$errorCheck) {
     try {
-        $connection = connectDatabase();
+        $connection = connectDB();
         
         $checkUserQuery = "SELECT id_user FROM user WHERE id_user = :user_id";
         $checkStmt = $connection->prepare($checkUserQuery);
@@ -141,7 +107,7 @@ if (!$errorCheck) {
 
 if (!$errorCheck) {
     try {
-        $connection = connectDatabase();
+        $connection = connectDB();
         
         $query = "
             INSERT INTO post (
@@ -165,7 +131,7 @@ if (!$errorCheck) {
         
         $result = $statement->execute([
             ':user_id' => (int)$data['user_id'],
-            ':post_image' => $dbImagePath, // Сохраняем только имя файла
+            ':post_image' => $dbImagePath,
             ':description' => htmlspecialchars($data['description'], ENT_QUOTES, 'UTF-8'),
             ':like_amount' => $likeAmount
         ]);
@@ -178,7 +144,7 @@ if (!$errorCheck) {
                 'message' => 'Post created successfully',
                 'post_id' => $postId,
                 'image_filename' => $imageName,
-                'image_url' => '/images/' . $imageName // Для доступа через веб
+                'image_url' => '/images/' . $imageName 
             ];
         } else {
             http_response_code(500);
