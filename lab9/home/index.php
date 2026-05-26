@@ -40,7 +40,29 @@ $ids = $pdo->query("SELECT id_post FROM post ORDER BY post_date DESC")->fetchAll
         <?php endforeach; ?>
 
     </div>
-
+    <div id="imageModal" class="modal">
+    <button class="modal__close" aria-label="Закрыть">&times;</button>
+    
+    <div class="modal__content">
+        <div class="slider" id="modalSlider">
+            <div class="slider__track" id="modalTrack">
+                </div>
+            
+            <button class="slider__btn slider__btn--prev" aria-label="Назад">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+            <button class="slider__btn slider__btn--next" aria-label="Вперёд">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </button>
+            <div class="slider__counter">
+                <span class="slider__current">1</span>/<span class="slider__total">1</span>
+            </div>
+        </div>
+    </div>       
     <script src="../js/scripts.js"></script>
 </body>
 </html>

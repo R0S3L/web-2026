@@ -421,3 +421,59 @@ input {
     pointer-events: none;
     z-index: 2;
 }
+
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.modal.is-open {
+    display: flex;
+}
+
+.modal__content {
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+
+#modalSlider {
+    width: 80vw;
+    max-width: 800px;
+    margin-top: 0;
+}
+
+#modalSlider .photo_post {
+    width: 100%;
+    height: 70vh;
+    object-fit: contain; 
+}
+
+/* Кнопка закрытия */
+.modal__close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 45px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 1010;
+    line-height: 1;
+}
+
+.modal__close:hover {
+    transform: scale(1.15);
+}
