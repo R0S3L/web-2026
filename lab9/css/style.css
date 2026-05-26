@@ -406,14 +406,14 @@ input {
 
 .slider__counter {
     position: absolute;
-    bottom: 10px;
+    top: 10px;
     right: 12px;
     background: rgba(34, 34, 34, 0.55);
     color: #ffffff;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 1;
-    padding: 4px 9px;
+    padding: 10px 10px;
     border-radius: 20px;
     letter-spacing: 0.2px;
     backdrop-filter: blur(4px);
