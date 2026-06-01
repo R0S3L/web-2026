@@ -1,3 +1,5 @@
+
+<link rel="stylesheet" href="../css/style.css">
 <nav class="side-panel">
     <button class="side-panel-button">
         <img class="side-panel-icon" src="../images/icons/home.png" width="24" height="24" alt="Дом">

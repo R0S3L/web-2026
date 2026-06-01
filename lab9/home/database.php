@@ -4,7 +4,7 @@ function connectDB(): PDO
 {
     $dsn = 'mysql:host=127.0.0.1;dbname=blog;charset=utf8mb4';
     $user = 'root';
-    $password = '';
+    $password = '1012';
 
     return new PDO($dsn, $user, $password, [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
