@@ -39,7 +39,7 @@ function initSlider(sliderEl) {
     }
  
     btnPrev.addEventListener('click', (e) => {
-        e.stopPropagation(); // Чтобы не триггерить открытие модалки при клике на стрелку
+        e.stopPropagation();
         go(idx - 1);
     });
     btnNext.addEventListener('click', (e) => {
@@ -133,17 +133,14 @@ function initReadMore() {
         
         if (!textEl || !btn) return;
         
-        // Временно убираем класс, чтобы измерить полную высоту
         container.classList.remove('is-clamped');
         const fullHeight = textEl.scrollHeight;
         container.classList.add('is-clamped');
         
-        // Получаем высоту строки из computed стиля
         const lineHeight = parseFloat(getComputedStyle(textEl).lineHeight);
-        const maxHeight = lineHeight * 2; // 2 строки
+        const maxHeight = lineHeight * 2; 
         
-        // Если полная высота больше максимальной - показываем кнопку
-        if (fullHeight > maxHeight + 2) { // +2 для погрешности
+        if (fullHeight > maxHeight + 2) { 
             btn.style.display = 'inline-block';
             
             btn.onclick = function(e) {
