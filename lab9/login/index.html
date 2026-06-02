@@ -12,19 +12,23 @@
                 <h1 class="login-header">Войти</h1>
             </div>
             <div class="login-form">
+                <div class="error-message" id="errorBlock">
+                    🤓 Поля обязательные
+                </div>
                 <p>Электропочта</p>
-                <input name="Login" class="login-input" type="text">
+                <input name="Login" class="login-input" type="text" id="email">
                 <label>Введите электронную почту в формате ******@***.**</label>
                 <p>Пароль</p>
                 <div class="input-wrapper">
-                    <input name="Password" class="login-input" type="password">
+                    <input name="Password" class="login-input" type="password" id="password">
                     <button class="show-password-button">
                         <img class="eye-icon" src="../images/icons/Eye_off_24.png" width="24" height="24" alt="Скрыть">   
                     </button>
                 </div>           
-                <button class="login-button">Продолжить</button>
+                <button class="login-button" id="loginBtn">Продолжить</button>
             </div>
         </div>
+        <script src="../js/login_scripts.js"></script>
     </body>
 </html>
  
