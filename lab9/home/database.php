@@ -4,7 +4,7 @@ function connectDB(): PDO
 {
     $dsn = 'mysql:host=127.0.0.1;dbname=blog;charset=utf8mb4';
     $user = 'root';
-    $password = '1012';
+    $password = '';
 
     return new PDO($dsn, $user, $password, [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -57,7 +57,6 @@ function getPostImages(PDO $connection, int $postId, string $fallbackImage): arr
             return $rows;
         }
     } catch (PDOException $e) {
-        // Таблица post_image ещё не создана — используем запасной вариант
     }
 
     return [$fallbackImage];
