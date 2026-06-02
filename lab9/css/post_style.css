@@ -46,7 +46,8 @@
 
 .image-upload-zone {
     width: 100%;
-    max-width: 500px;
+    min-width: 500px;
+    max-width: 1000px;
     aspect-ratio: 1 / 1;
     background-color: #f5f5f7;
     border-radius: 4px;
@@ -79,7 +80,6 @@
     background-color: #333;
 }
 
-/* Синяя ссылка под областью */
 .action-row {
     width: 100%;
     max-width: 500px;
@@ -90,7 +90,7 @@
 .btn-link-add {
     background: none;
     border: none;
-    color: #0095f6;
+    color: rgb(55, 131, 217);
     font-size: 14px;
     cursor: pointer;
     padding: 0;
@@ -101,10 +101,9 @@
 }
 
 .btn-link-add:hover {
-    color: #0074cc;
+    color: #1a1a1a;
 }
 
-/* Поле ввода подписи */
 .description-zone {
     width: 100%;
     max-width: 500px;
@@ -121,17 +120,16 @@
     outline: none;
 }
 
-/* Кнопка Поделиться */
 .submit-zone {
     width: 100%;
     max-width: 500px;
     margin-top: 40px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
 }
 
 .btn-share {
-    background-color: #0095f6;
+    background-color: #1a1a1a;
     color: white;
     border: none;
     border-radius: 8px;
@@ -143,7 +141,7 @@
 }
 
 .btn-share:disabled {
-    background-color: #b2dffc;
+    background-color: #333;
     cursor: not-allowed;
 }
 

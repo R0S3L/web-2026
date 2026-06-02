@@ -32,11 +32,7 @@ $userId = $_SESSION['user_id'] ?? 1; // Default to user 1 for testing
             <div class="image-upload-zone" id="uploadZone">
                 <div class="upload-placeholder" id="uploadPlaceholder">
                     <div class="image-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <polyline points="21 15 16 10 5 21"/>
-                        </svg>
+                        <img src="../images/icons/image_post_icon.png" width="100px" height="100px">
                     </div>
                     <button type="button" class="btn-black-add" id="btnBlackAdd">Добавить фото</button>
                 </div>

@@ -1,21 +1,7 @@
 <?php
 
-function connectDatabase(): PDO {
-    try {
-        $pdo = new PDO(
-            'mysql:host=localhost;dbname=blog;charset=utf8mb4',
-            'root',
-            ''
-        );
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        return $pdo;
-    } catch (PDOException $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Database connection failed']);
-        exit;
-    }
-}
+require_once __DIR__ . '\database.php';
+
 
 $method = $_SERVER['REQUEST_METHOD'];
 $errorCheck = FALSE;
@@ -103,7 +89,6 @@ if (!$errorCheck) {
     $uploadDir = '../images/';
     $imagePath = $uploadDir . $imageName;
     
-    // В БД сохраняем ТОЛЬКО имя файла (не полный путь)
     $dbImagePath = $imageName; // Просто имя файла
     
     // Создаем директорию если не существует
@@ -121,7 +106,7 @@ if (!$errorCheck) {
 
 if (!$errorCheck) {
     try {
-        $connection = connectDatabase();
+        $connection = connectDB();
         
         $checkUserQuery = "SELECT id_user FROM user WHERE id_user = :user_id";
         $checkStmt = $connection->prepare($checkUserQuery);
@@ -141,7 +126,7 @@ if (!$errorCheck) {
 
 if (!$errorCheck) {
     try {
-        $connection = connectDatabase();
+        $connection = connectDB();
         
         $query = "
             INSERT INTO post (
