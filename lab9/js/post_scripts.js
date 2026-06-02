@@ -8,11 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const sliderTrack = document.getElementById('sliderTrack');
     const btnShare = document.getElementById('btnShare');
     const postDescription = document.getElementById('postDescription');
+    const userId = document.getElementById('userId');
     
     const slidePrev = document.getElementById('slidePrev');
     const slideNext = document.getElementById('slideNext');
     const currentSlideCtx = document.getElementById('currentSlide');
     const totalSlidesCtx = document.getElementById('totalSlides');
+
+    const formContainer = document.getElementById('formContainer');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
 
     // Массив для хранения загруженных файлов (объектов File)
     let uploadedFiles = [];
@@ -130,22 +135,74 @@ document.addEventListener('DOMContentLoaded', () => {
     // Слушаем ввод текста для постоянной валидации
     postDescription.addEventListener('input', validateForm);
 
-    // Клик на кнопку «Поделиться»
-    btnShare.addEventListener('click', () => {
-        // Формируем объект с информацией о новом посте
-        const postData = {
-            description: postDescription.value.trim(),
-            imagesCount: uploadedFiles.length,
-            images: uploadedFiles.map(file => ({
-                name: file.name,
-                size: `${(file.size / 1024).toFixed(2)} KB`,
-                type: file.type
-            }))
-        };
+    // Функция отправки поста на сервер
+    async function savePostToServer() {
+        try {
+            // Показываем индикатор загрузки
+            btnShare.disabled = true;
+            btnShare.textContent = 'Сохраняем...';
 
-        // Выводим в консоль по ТЗ для последующей отправки в лабораторной 9.2.1
-        console.log('--- Информация о новом посте ---');
-        console.log(postData);
-        alert('Информация о посте успешно выведена в консоль!');
-    });
+            // Создаем FormData для отправки файлов и данных
+            const formData = new FormData();
+
+            // Добавляем данные поста
+            const postData = {
+                user_id: userId.value,
+                description: postDescription.value.trim(),
+            };
+            formData.append('data', JSON.stringify(postData));
+
+            // Добавляем первое изображение (API ожидает post_image)
+            if (uploadedFiles.length > 0) {
+                formData.append('post_image', uploadedFiles[0]);
+            }
+
+            // Отправляем запрос на сервер
+            const response = await fetch('../home/api.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok && responseData.success) {
+                // Успешное сохранение поста
+                hideForm();
+                showSuccessMessage();
+            } else {
+                // Ошибка при сохранении
+                const errorText = responseData.error || 'Произошла неизвестная ошибка';
+                showErrorMessage(errorText);
+                btnShare.disabled = false;
+                btnShare.textContent = 'Поделиться';
+            }
+        } catch (error) {
+            // Ошибка при отправке запроса
+            console.error('Ошибка при отправке поста:', error);
+            showErrorMessage('Ошибка соединения: ' + error.message);
+            btnShare.disabled = false;
+            btnShare.textContent = 'Поделиться';
+        }
+    }
+
+    // Функция скрытия формы
+    function hideForm() {
+        formContainer.style.display = 'none';
+    }
+
+    // Функция отображения сообщения об успехе
+    function showSuccessMessage() {
+        successMessage.style.display = 'block';
+        errorMessage.style.display = 'none';
+    }
+
+    // Функция отображения сообщения об ошибке
+    function showErrorMessage(message) {
+        errorMessage.textContent = '✗ Ошибка: ' + message;
+        errorMessage.style.display = 'block';
+        successMessage.style.display = 'none';
+    }
+
+
+    btnShare.addEventListener('click', savePostToServer);
 });
