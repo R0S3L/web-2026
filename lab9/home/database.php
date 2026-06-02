@@ -41,13 +41,6 @@ function formatPostDate($dateString) {
     return date('d.m.Y H:i', strtotime($dateString));
 }
 
-/**
- * Возвращает список имён файлов изображений для поста.
- *
- * Логика: если существует таблица post_image (связь 1-N),
- * берём из неё; иначе возвращаем единственное поле post_image
- * из самой записи поста.
- */
 function getPostImages(PDO $connection, int $postId, string $fallbackImage): array
 {
     try {
