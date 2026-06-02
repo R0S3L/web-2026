@@ -2,12 +2,16 @@
 require_once __DIR__ . '/../home/database.php';
 
 session_start();
-$userId = $_SESSION['user_id'] ?? 1;
+$userId = $_SESSION['user_id'] ?? 1; // Default to user 1 for testing
+$postId = isset($_GET['post_id']) ? (int)$_GET['post_id'] : null;
+$isEditing = $postId !== null;
+$pageTitle = $isEditing ? 'Редактирование поста' : 'Новый пост';
+$buttonText = $isEditing ? 'Сохранить' : 'Поделиться';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Создать пост</title>
+    <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <meta charset="utf-8">
     <link href="../css/post_style.css" rel="stylesheet">
 </head>
@@ -15,17 +19,18 @@ $userId = $_SESSION['user_id'] ?? 1;
     <?php include '../home/sidebar.php'; ?>
 
     <div class="create-post-container">
-        <h2 class="page-title">Новый пост</h2>
+        <h2 class="page-title"><?php echo htmlspecialchars($pageTitle); ?></h2>
 
         <div id="successMessage" class="success-message" style="display: none;">
             ✓ Пост успешно сохранен!
         </div>
 
         <div id="errorMessage" class="error-message" style="display: none;"></div>
-
-        <div id="formContainer">
+          <div id="formContainer">
             <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
             <input type="hidden" id="userId" value="<?php echo htmlspecialchars($userId); ?>">
+            <input type="hidden" id="postId" value="<?php echo htmlspecialchars($postId ?? ''); ?>">
+            <input type="hidden" id="isEditing" value="<?php echo htmlspecialchars($isEditing ? '1' : '0'); ?>">
 
             <div class="image-upload-zone" id="uploadZone">
                 <div class="upload-placeholder" id="uploadPlaceholder">
@@ -58,7 +63,7 @@ $userId = $_SESSION['user_id'] ?? 1;
             </div>
 
             <div class="submit-zone">
-                <button type="button" id="btnShare" class="btn-share" disabled>Поделиться</button>
+               <button type="button" id="btnShare" class="btn-share" disabled><?php echo htmlspecialchars($buttonText); ?></button>
             </div>
         </div>
     </div>

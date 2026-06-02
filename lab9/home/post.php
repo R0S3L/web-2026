@@ -8,7 +8,7 @@ $sliderId = 'slider_' . $post['id_post'];
              src="../images/<?= $userImage ?>"
              alt="<?= $fullName ?>">
         <h2 class="nickname"><?= $fullName ?></h2>
-        <img class="icons pen" src="../images/icons/pen.svg" alt="Редактировать">
+        <img class="icons pen" src="../images/icons/pen.svg" alt="Редактировать" data-post-id="<?= $post['id_post'] ?>" style="cursor: pointer;">
     </div>
 
     <div class="slider" id="<?= $sliderId ?>">

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Элементы интерфейса
     const fileInput = document.getElementById('fileInput');
     const btnBlackAdd = document.getElementById('btnBlackAdd');
@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnShare = document.getElementById('btnShare');
     const postDescription = document.getElementById('postDescription');
     const userId = document.getElementById('userId');
+    const postId = document.getElementById('postId');
+    const isEditing = document.getElementById('isEditing').value === '1';
     
     const slidePrev = document.getElementById('slidePrev');
     const slideNext = document.getElementById('slideNext');
@@ -22,6 +24,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // Массив для хранения загруженных файлов (объектов File)
     let uploadedFiles = [];
     let currentSlideIndex = 0;
+    let existingPostImage = null; // For edit mode
+
+    // Load existing post data if editing
+    if (isEditing && postId.value) {
+        try {
+            const response = await fetch(`../home/api_get_post.php?post_id=${postId.value}`);
+            const data = await response.json();
+            
+            if (data.success && data.post) {
+                const post = data.post;
+                postDescription.value = post.post_description;
+                existingPostImage = post.post_image;
+                
+                // Show existing image as default
+                if (existingPostImage) {
+                    const existingImg = new Image();
+                    existingImg.src = `../images/${existingPostImage}`;
+                    existingImg.onload = () => {
+                        // Create a blob from the image URL to add to uploadedFiles
+                        fetch(`../images/${existingPostImage}`)
+                            .then(res => res.blob())
+                            .then(blob => {
+                                const file = new File([blob], existingPostImage, { type: blob.type });
+                                uploadedFiles.push(file);
+                                updateSliderUI();
+                                validateForm();
+                            })
+                            .catch(err => console.error('Failed to load existing image:', err));
+                    };
+                    existingImg.onerror = () => {
+                        updateSliderUI();
+                        validateForm();
+                    };
+                }
+            } else {
+                showErrorMessage(data.error || 'Failed to load post');
+            }
+        } catch (error) {
+            console.error('Error loading post:', error);
+            showErrorMessage('Error loading post: ' + error.message);
+        }
+    }
 
     // Срабатывание выбора файлов при клике на кнопки
     btnBlackAdd.addEventListener('click', () => fileInput.click());
@@ -120,15 +164,25 @@ document.addEventListener('DOMContentLoaded', () => {
         goToSlide(currentSlideIndex);
     });
 
-    // Валидация формы: кнопка активна, только если есть и фото, и текст
+    // Валидация формы
     function validateForm() {
         const hasText = postDescription.value.trim().length > 0;
         const hasImages = uploadedFiles.length > 0;
 
-        if (hasText && hasImages) {
-            btnShare.disabled = false;
+        // For create mode: require both text and images
+        // For edit mode: require only text (images are optional)
+        if (isEditing) {
+            if (hasText) {
+                btnShare.disabled = false;
+            } else {
+                btnShare.disabled = true;
+            }
         } else {
-            btnShare.disabled = true;
+            if (hasText && hasImages) {
+                btnShare.disabled = false;
+            } else {
+                btnShare.disabled = true;
+            }
         }
     }
 
@@ -140,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // Показываем индикатор загрузки
             btnShare.disabled = true;
+            const originalButtonText = btnShare.textContent;
             btnShare.textContent = 'Сохраняем...';
 
             // Создаем FormData для отправки файлов и данных
@@ -150,38 +205,73 @@ document.addEventListener('DOMContentLoaded', () => {
                 user_id: userId.value,
                 description: postDescription.value.trim(),
             };
-            formData.append('data', JSON.stringify(postData));
 
-            // Добавляем первое изображение (API ожидает post_image)
-            if (uploadedFiles.length > 0) {
-                formData.append('post_image', uploadedFiles[0]);
-            }
+            if (isEditing && postId.value) {
+                postData.post_id = postId.value;
+                formData.append('data', JSON.stringify(postData));
+                
+                // Добавляем новое изображение если оно было загружено (необязательно для edit)
+                if (uploadedFiles.length > 0 && uploadedFiles[0].size > 0) {
+                    // Проверяем, это новый файл или существующий (по размеру)
+                    if (uploadedFiles[0].size !== undefined) {
+                        formData.append('post_image', uploadedFiles[0]);
+                    }
+                }
+                
+                // Отправляем запрос на сервер
+                const response = await fetch('../home/api_edit.php', {
+                    method: 'POST',
+                    body: formData
+                });
 
-            // Отправляем запрос на сервер
-            const response = await fetch('../home/api.php', {
-                method: 'POST',
-                body: formData
-            });
+                const responseData = await response.json();
 
-            const responseData = await response.json();
-
-            if (response.ok && responseData.success) {
-                // Успешное сохранение поста
-                hideForm();
-                showSuccessMessage();
+                if (response.ok && responseData.success) {
+                    // Успешное сохранение поста
+                    hideForm();
+                    showSuccessMessage();
+                } else {
+                    // Ошибка при сохранении
+                    const errorText = responseData.error || 'Произошла неизвестная ошибка';
+                    showErrorMessage(errorText);
+                    btnShare.disabled = false;
+                    btnShare.textContent = originalButtonText;
+                }
             } else {
-                // Ошибка при сохранении
-                const errorText = responseData.error || 'Произошла неизвестная ошибка';
-                showErrorMessage(errorText);
-                btnShare.disabled = false;
-                btnShare.textContent = 'Поделиться';
+                // Create mode
+                formData.append('data', JSON.stringify(postData));
+
+                // Добавляем первое изображение (API ожидает post_image)
+                if (uploadedFiles.length > 0) {
+                    formData.append('post_image', uploadedFiles[0]);
+                }
+
+                // Отправляем запрос на сервер
+                const response = await fetch('../home/api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const responseData = await response.json();
+
+                if (response.ok && responseData.success) {
+                    // Успешное сохранение поста
+                    hideForm();
+                    showSuccessMessage();
+                } else {
+                    // Ошибка при сохранении
+                    const errorText = responseData.error || 'Произошла неизвестная ошибка';
+                    showErrorMessage(errorText);
+                    btnShare.disabled = false;
+                    btnShare.textContent = originalButtonText;
+                }
             }
         } catch (error) {
             // Ошибка при отправке запроса
             console.error('Ошибка при отправке поста:', error);
             showErrorMessage('Ошибка соединения: ' + error.message);
             btnShare.disabled = false;
-            btnShare.textContent = 'Поделиться';
+            btnShare.textContent = isEditing ? 'Сохранить' : 'Поделиться';
         }
     }
 

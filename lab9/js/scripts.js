@@ -161,3 +161,13 @@ function initReadMore() {
 }
 
 initReadMore();
+
+// Handle edit post button click
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('pen')) {
+        const postId = e.target.getAttribute('data-post-id');
+        if (postId) {
+            window.location.href = `../post/index.php?post_id=${postId}`;
+        }
+    }
+});
