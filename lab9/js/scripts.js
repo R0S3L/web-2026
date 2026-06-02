@@ -21,7 +21,6 @@ function initSlider(sliderEl) {
  
 document.querySelectorAll('.slider').forEach(initSlider);
 
-// 1. Инициализация обычных слайдеров в ленте
 function initSlider(sliderEl) {
     const track   = sliderEl.querySelector('.slider__track');
     const btnPrev = sliderEl.querySelector('.slider__btn--prev');
@@ -134,28 +133,34 @@ function initReadMore() {
         
         if (!textEl || !btn) return;
         
-        const isOverflowing = textEl.scrollHeight > 36; 
+        // Временно убираем класс, чтобы измерить полную высоту
+        container.classList.remove('is-clamped');
+        const fullHeight = textEl.scrollHeight;
+        container.classList.add('is-clamped');
         
-        if (isOverflowing) {
+        // Получаем высоту строки из computed стиля
+        const lineHeight = parseFloat(getComputedStyle(textEl).lineHeight);
+        const maxHeight = lineHeight * 2; // 2 строки
+        
+        // Если полная высота больше максимальной - показываем кнопку
+        if (fullHeight > maxHeight + 2) { // +2 для погрешности
             btn.style.display = 'inline-block';
             
-            btn.addEventListener('click', () => {
-                const isClamped = container.classList.contains('is-clamped');
+            btn.onclick = function(e) {
+                e.stopPropagation();
                 
-                if (isClamped) {
+                if (container.classList.contains('is-clamped')) {
                     container.classList.remove('is-clamped');
-                    btn.textContent = 'Свернуть';
+                    this.textContent = 'Свернуть';
                 } else {
                     container.classList.add('is-clamped');
-                    btn.textContent = 'ещё';
+                    this.textContent = 'ещё';
                 }
-            });
+            };
         } else {
             btn.style.display = 'none';
         }
     });
 }
-
-document.addEventListener('DOMContentLoaded', initReadMore);
 
 initReadMore();

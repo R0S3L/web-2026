@@ -477,37 +477,36 @@ input {
 .modal__close:hover {
     transform: scale(1.15);
 }
-/* ── Блок раскрытия текста (Ещё/Свернуть) ──────────────── */
+
 .post-description-block {
     width: 474px;
     margin-top: 8px;
 }
 
-.post-text {
+.post-text-container .post-text {
     font-size: 15px;
     font-weight: 400;
-    line-height: 18px; /* Важно зафиксировать line-height для расчета строк */
+    line-height: 18px; 
     letter-spacing: -0.15px;
     color: #222222;
+    display: block;
 }
 
-/* Класс, который ограничивает текст двумя строками и ставит троеточие */
 .post-text-container.is-clamped .post-text {
     display: -webkit-box;
+    -webkit-line-clamp: 2;
     line-clamp: 2;
-    box-orient: vertical;
+    -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* Стили для кнопки Ещё / Свернуть */
 .read-more-btn {
     background: none;
     border: none;
     padding: 0;
-    margin-left: 5px;
     font-size: 14px;
     font-weight: 500;
-    color: rgba(34, 34, 34, 0.5);
+    color: gray;
     cursor: pointer;
     font-family: inherit;
     display: inline-block;
