@@ -1,10 +1,8 @@
 <?php
 require_once __DIR__ . '/../home/database.php';
 
-// For now, use a test user ID. In a real app, this would come from session
-// Assuming session is set up elsewhere in the application
 session_start();
-$userId = $_SESSION['user_id'] ?? 1; // Default to user 1 for testing
+$userId = $_SESSION['user_id'] ?? 1;
 ?>
 <!DOCTYPE html>
 <html lang="ru">

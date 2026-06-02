@@ -121,7 +121,7 @@ function mergeObjects(obj1, obj2) {
             result[key] = obj2[key];
         }
     }
-
+    console.log(result);
     return result;
 }
 
